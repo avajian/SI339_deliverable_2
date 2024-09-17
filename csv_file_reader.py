@@ -18,6 +18,7 @@ for file in os.listdir(folder_path):
     if file.endswith('.csv'):
         all_files.append(file)
 
+print(len(all_files))
 
 for csv_file in all_files:
     full_path = os.path.join(folder_path, csv_file)
@@ -75,7 +76,19 @@ for csv_file in all_files:
         'athlete_results': athlete_results.copy()  # Copy to avoid overwriting
     }
 
-# print(meet)
+
+# info for one meet
+meet_info = meet[meet_id]['info']
+meet_name = meet_info['meet_name']
+meet_date = meet_info['meet_date']
+meet_link = meet_info['meet_link']
+meet_desc = meet_info['meet_desc']
+
+athletes = meet[meet_id]['athlete_results']
+teams = meet[meet_id]['team_results']
+
+
+# team_results = meet[meet_id]['team_results'][0]
 
 # Start building the HTML structure
 html_content = f'''<!DOCTYPE html>
@@ -85,9 +98,18 @@ html_content = f'''<!DOCTYPE html>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel = "stylesheet" href = "css/reset.css">
    <link rel = "stylesheet" href = "css/style.css">
-   <title>{meet[meet_id]} Country Meet</title>
+   <title>{meet_name} Country Meet</title>
 </head>
 <body>
+<p>{meet_name}</p>
+<p>{meet_date}</p>
+<p>{meet_link}</p>
+<p>{meet_desc}</p>
+<br>
+<p>team results: {teams}</p>
+<br>
+<p>athlete results: {athletes} </p>
+<br>
 </body>
 </html>
 '''
