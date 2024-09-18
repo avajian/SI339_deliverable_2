@@ -9,6 +9,7 @@ meet = {}
 info = {}
 team_results = {}
 athlete_results = {}
+all_meet_ids = []
 
 in_team_section = False
 in_athlete_section = False
@@ -18,7 +19,6 @@ for file in os.listdir(folder_path):
     if file.endswith('.csv'):
         all_files.append(file)
 
-print(len(all_files))
 
 for csv_file in all_files:
     full_path = os.path.join(folder_path, csv_file)
@@ -27,6 +27,7 @@ for csv_file in all_files:
         all_data = list(reader) # gets all data in one file
         
         meet_id = csv_file.replace('csv', '')
+        all_meet_ids.append(meet_id)
         
         info = {
             'meet_name': all_data[0][0],
@@ -77,43 +78,49 @@ for csv_file in all_files:
     }
 
 
-# info for one meet
-meet_info = meet[meet_id]['info']
-meet_name = meet_info['meet_name']
-meet_date = meet_info['meet_date']
-meet_link = meet_info['meet_link']
-meet_desc = meet_info['meet_desc']
+for i in all_meet_ids:
 
-athletes = meet[meet_id]['athlete_results']
-teams = meet[meet_id]['team_results']
+    # info for one meet
+    meet_info = meet[i]['info']
+    meet_name = meet_info['meet_name']
+    meet_date = meet_info['meet_date']
+    meet_link = meet_info['meet_link']
+    meet_desc = meet_info['meet_desc']
 
+    athletes = meet[i]['athlete_results']
+    teams = meet[i]['team_results']
 
-# team_results = meet[meet_id]['team_results'][0]
+    # Start building the HTML structure
+    html_content = f'''<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "css/reset.css">
+    <link rel = "stylesheet" href = "css/style.css">
+    <title>{meet_name} Country Meet</title>
+    </head>
+    <body>
+    <p>{meet_name}</p>
+    <p>{meet_date}</p>
+    <p>{meet_link}</p>
+    <p>{meet_desc}</p>
+    <br>
+    <p>team results: {teams}</p>
+    <br>
+    <p>athlete results: {athletes} </p>
+    <br>
+    </body>
+    </html>
+    '''
+    # create output folder  
+    output_folder = "output"
+    if not os.path.exists(output_folder):
+        os.mkdir(output_folder)
 
-# Start building the HTML structure
-html_content = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel = "stylesheet" href = "css/reset.css">
-   <link rel = "stylesheet" href = "css/style.css">
-   <title>{meet_name} Country Meet</title>
-</head>
-<body>
-<p>{meet_name}</p>
-<p>{meet_date}</p>
-<p>{meet_link}</p>
-<p>{meet_desc}</p>
-<br>
-<p>team results: {teams}</p>
-<br>
-<p>athlete results: {athletes} </p>
-<br>
-</body>
-</html>
-'''
+    file_name = f"{i}.html"
+    file_path = os.path.join(output_folder, file_name)
 
-# Writing the HTML to a file
-with open("output.html", "w", encoding="utf-8") as html_file:
-    html_file.write(html_content)
+    # add html content to each file
+    with open(file_path, "w", encoding="utf-8") as html_file:
+        html_file.write(html_content)
