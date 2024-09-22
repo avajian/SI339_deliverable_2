@@ -200,11 +200,14 @@ def generate_meet_pages(meets):
             <title>{meet_name} - Country Meet</title>
         </head>
         <body>
+            <header>
             <h1>{meet_name}</h1>
             <p><strong>Date:</strong> {meet_date}</p>
             <p><strong>Link:</strong> <a href="{meet_link}">{meet_link}</a></p>
             <p><strong>Description:</strong> {meet_desc}</p>
-            
+            </header>
+
+            <div class="team-results">
             <h2>Team Results</h2>
             <table border="1" cellpadding="5" cellspacing="0">
                 <thead>
@@ -218,7 +221,9 @@ def generate_meet_pages(meets):
                     {''.join([f'<tr><td>{team["place"]}</td><td>{team_name}</td><td>{team["score"]}</td></tr>' for team_name, team in teams.items()])}
                 </tbody>
             </table>
+            </div>
 
+            <div class="athlete-results">
             <h2>Athlete Results</h2>
             <table border="1" cellpadding="5" cellspacing="0">
                 <thead>
@@ -235,6 +240,7 @@ def generate_meet_pages(meets):
                     {athlete_rows}
                 </tbody>
             </table>
+            </div>
 
         </body>
         </html>
