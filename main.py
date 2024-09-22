@@ -61,7 +61,7 @@ def generate_athlete_pages(athletes):
         html_content += '''
             <div class="highlight-table">
                 <h2>Personal Bests</h2>
-                <table border="1" cellpadding="10" cellspacing="0">
+                <table>
                     <thead>
                         <tr>
                             <th>Overall Place</th>
@@ -109,7 +109,7 @@ def generate_athlete_pages(athletes):
         html_content += '''
             <div class="progress-table">
                 <h2>Performance Overview</h2>
-                <table border="1" cellpadding="10" cellspacing="0">
+                <table>
                     <thead>
                         <tr>
                             <th>Meet</th>
@@ -209,7 +209,7 @@ def generate_meet_pages(meets):
 
             <div class="team-results">
             <h2>Team Results</h2>
-            <table border="1" cellpadding="5" cellspacing="0">
+            <table>
                 <thead>
                     <tr>
                         <th>Place</th>
@@ -225,7 +225,7 @@ def generate_meet_pages(meets):
 
             <div class="athlete-results">
             <h2>Athlete Results</h2>
-            <table border="1" cellpadding="5" cellspacing="0">
+            <table>
                 <thead>
                     <tr>
                         <th>Place</th>
