@@ -6,3 +6,5 @@ This data is iterated through by row and given a variable name based on its posi
 the created html template by replacing placeholders with the correct data. 
 
 To run the program, type in 'python3 main.py' in the terminal. An output folder will be created with two sub folders of html content: athletes and meets.
+
+Note that only the athletes html files are being used for this project.
