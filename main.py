@@ -19,21 +19,59 @@ def generate_athlete_pages(athletes):
         </head>
         <body>
 
-            <!-- Header Section -->
+            <!-- Header & Personal Info Section -->
             <header>
-                <h1>{name}'s Progress Report</h1>
-                <p><strong>Athlete ID:</strong> {athlete_id}</p>
-                <p>A summary of {name}'s cross country performances across multiple seasons.</p>
+                <div class="profile-info">
+                    <h1>{name}'s Progress Report</h1>
+                    <p><strong>Athlete ID:</strong> {athlete_id}</p>
+                    <p>A summary of {name}'s cross country performances across multiple seasons.</p>
+                </div>
+
+                <div class = "profile-pic">
+                add profile pic image code here
+                </div>
+
+                <div class = "logo">
+                add team logo image code here
+                </div>
+
+                <nav>
+                    <ul>
+                       <!-- <li> <a href="index.html">Back to Home Page</a> </li> -->
+                        <!-- <li> <a href="meets.html">View Meets</a> </li> -->
+                    </ul>
+                </nav>
             </header>
 
+            <!-- Athlete Highlight Table Section -->
+            <div class="highlight-table">
+                <h2>Personal Bests</h2>
+                <table border="1" cellpadding="10" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>PR Time</th>
+                            <th>Date</th>
+                            <th>Meet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <! -- Add athlete personal bests here, edit this -->
+                </table>
+                </div>
+
+
+
+
             <!-- Progress Table Section -->
-            <section>
+            <div class="progress-table">
                 <h2>Performance Overview</h2>
                 <table border="1" cellpadding="10" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Year</th>
                             <th>Meet</th>
+                            <! -- <th>Event</th> -->
                             <th>Overall Place</th>
                             <th>Grade</th>
                             <th>Time</th>
@@ -41,7 +79,8 @@ def generate_athlete_pages(athletes):
                             <th>Comments</th>
                         </tr>
                     </thead>
-                    <tbody>'''
+                    <tbody> '''
+           
 
         # Loop through athlete results and output each row
         for result_id, result in athlete_results.items():
@@ -50,6 +89,7 @@ def generate_athlete_pages(athletes):
                 <tr>
                     <td>{result.get('year', 'N/A')}</td>
                     <td>{result.get('meet', 'N/A')}</td>
+                    <!-- add event name here -->
                     <td>{result.get('overall_place', 'N/A')}</td>
                     <td>{result.get('grade', 'N/A')}</td>
                     <td>{result.get('time', 'N/A')}</td>
@@ -60,23 +100,23 @@ def generate_athlete_pages(athletes):
         html_content += '''
                     </tbody>
                 </table>
-            </section>
+            </div>
 
             <!-- Favorite Photos Section -->
-            <section>
+            <div class = "photo-section">
                 <h3>Favorite Photos</h3>
                 <p>Upload your favorite moments from the season below:</p>
                 <form method="POST" action="/upload" enctype="multipart/form-data">
                     <input type="file" name="photo" accept="image/*">
                     <button type="submit">Upload Photo</button>
                 </form>
-            </section>
+            </div>
 
             <!-- Accessible Print Option -->
-            <section>
+            <div class = 'print-option'>
                 <h3>Printable Version</h3>
                 <p>For a clean, printable version of {name}'s progress, <a href="#" onclick="window.print()">click here</a>.</p>
-            </section>
+            </div>
 
         </body>
         </html>
