@@ -5,9 +5,23 @@ import re
 
 
 def generate_athlete_pages(athletes):
+    
+    image_folder = "../../images/athlete_images"
+
     for athlete_id, athlete in athletes.items():
         name = athlete['info']['name']
         athlete_results = athlete['results']
+
+        # Determine the image path based on athlete ID
+        image_path = f"{image_folder}/{athlete_id}.jpg"
+             
+        # Debugging: Print out the image path to ensure it's correctly built
+        print(f"Looking for image at: {image_path}")
+
+        print(f"Current working directory: {os.getcwd()}")
+
+        # if not os.path.exists(image_path):
+        #     image_path = "../../images/default_profile.png"
 
         # Start building the HTML structure
         html_content = f'''<!DOCTYPE html>
@@ -18,6 +32,12 @@ def generate_athlete_pages(athletes):
             <title>{name}'s Cross Country Progress</title>
         </head>
         <body>
+                <nav>
+                    <ul>
+                        <!-- <li> <a href="index.html">Back to Home Page</a> </li> -->
+                        <!-- <li> <a href="meets.html">View Meets</a> </li> -->
+                    </ul>
+                </nav>
 
             <!-- Header & Personal Info Section -->
             <header>
@@ -27,51 +47,72 @@ def generate_athlete_pages(athletes):
                     <p>A summary of {name}'s cross country performances across multiple seasons.</p>
                 </div>
 
-                <div class = "profile-pic">
-                add profile pic image code here
+                <div class="profile-pic">
+                    <img src="{image_path}" alt="Profile picture of {name}">
                 </div>
 
-                <div class = "logo">
-                add team logo image code here
+                <div class="logo">
+                <!-- Add team logo image code here -->
                 </div>
 
-                <nav>
-                    <ul>
-                       <!-- <li> <a href="index.html">Back to Home Page</a> </li> -->
-                        <!-- <li> <a href="meets.html">View Meets</a> </li> -->
-                    </ul>
-                </nav>
-            </header>
+            </header>'''
 
-            <!-- Athlete Highlight Table Section -->
+        # Personal Bests Table
+        html_content += '''
             <div class="highlight-table">
                 <h2>Personal Bests</h2>
                 <table border="1" cellpadding="10" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Event</th>
+                            <th>Overall Place</th>
                             <th>PR Time</th>
+                            <th>Grade</th>
                             <th>Date</th>
                             <th>Meet</th>
+                            <th>Comments</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <! -- Add athlete personal bests here, edit this -->
+                    <tbody>'''
+
+        # Track if any PR or SR was found
+        personal_best_added = False
+
+        # Loop through athlete results and output PRs and SRs
+        for result_id, result in athlete_results.items():
+            time = result.get('time', 'N/A')
+
+            if 'PR' in time or 'SR' in time:
+                personal_best_added = True
+                html_content += f'''
+                    <tr>
+                        <td>{result.get('overall_place', 'N/A')}</td>
+                        <td>{time}</td>
+                        <td>{result.get('grade', 'N/A')}</td>
+                        <td>{result.get('date', 'N/A')}</td>
+                        <td>{result.get('meet', 'N/A')}</td>
+                        <td>{result.get('comments', 'N/A')}</td>
+                    </tr>'''
+
+        # Close the Personal Bests table
+        if not personal_best_added:
+            html_content += '''
+                <tr>
+                    <td colspan="7">No personal bests recorded.</td>
+                </tr>'''
+
+        html_content += '''
+                    </tbody>
                 </table>
-                </div>
+            </div>'''
 
-
-
-
-            <!-- Progress Table Section -->
+        # Progress Overview Table
+        html_content += '''
             <div class="progress-table">
                 <h2>Performance Overview</h2>
                 <table border="1" cellpadding="10" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Year</th>
                             <th>Meet</th>
-                            <! -- <th>Event</th> -->
                             <th>Overall Place</th>
                             <th>Grade</th>
                             <th>Time</th>
@@ -79,17 +120,13 @@ def generate_athlete_pages(athletes):
                             <th>Comments</th>
                         </tr>
                     </thead>
-                    <tbody> '''
-           
+                    <tbody>'''
 
-        # Loop through athlete results and output each row
+        # Loop through athlete results and output all results
         for result_id, result in athlete_results.items():
-
             html_content += f'''
                 <tr>
-                    <td>{result.get('year', 'N/A')}</td>
                     <td>{result.get('meet', 'N/A')}</td>
-                    <!-- add event name here -->
                     <td>{result.get('overall_place', 'N/A')}</td>
                     <td>{result.get('grade', 'N/A')}</td>
                     <td>{result.get('time', 'N/A')}</td>
@@ -103,7 +140,7 @@ def generate_athlete_pages(athletes):
             </div>
 
             <!-- Favorite Photos Section -->
-            <div class = "photo-section">
+            <div class="photo-section">
                 <h3>Favorite Photos</h3>
                 <p>Upload your favorite moments from the season below:</p>
                 <form method="POST" action="/upload" enctype="multipart/form-data">
@@ -113,7 +150,7 @@ def generate_athlete_pages(athletes):
             </div>
 
             <!-- Accessible Print Option -->
-            <div class = 'print-option'>
+            <div class='print-option'>
                 <h3>Printable Version</h3>
                 <p>For a clean, printable version of {name}'s progress, <a href="#" onclick="window.print()">click here</a>.</p>
             </div>
