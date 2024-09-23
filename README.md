@@ -3,7 +3,7 @@ This repository includes:
   - python file to read and populate html templates (main.py and helper functions: generate files)
   - csv files (meets and athletes)
   - images folder
-  - index.html (populated html template for a user)
+  - index.html (populated html template for a user posted on github pages)
   - Juan_Luis_Llanes.html (second populated html template)
 
 The python program contains two generate files: generate_athletes.py and generate_meets.py to read in csv content from both athletes and meets.
