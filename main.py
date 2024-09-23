@@ -48,7 +48,7 @@ def generate_athlete_pages(athletes):
                 </div>
 
                 <div class="profile-pic">
-                    <img src="{image_path}" alt="Profile picture of {name}">
+                    <img src="{image_path}" alt="{name} running in a meet">
                 </div>
 
                 <div class="logo">
