@@ -26,15 +26,16 @@ def process_athletes(folder_path='athletes/mens_team'):
                 if row[0] == 'Name' and row[1] == 'Overall Place':
                     in_athlete_section = True
                 if in_athlete_section and len(row) >= 8 and row[0] != 'Name':
+
                     athlete_results[i] = {
-                        'name': row[0],
-                        'overall_place': row[1],
-                        'grade': row[2],
-                        'time': row[3],
-                        'date': row[4],
-                        'meet': row[5],
-                        'comments': row[6],
-                        'photo': row[7]
+                        'name': row[0] if row[0] else 'N/A',
+                        'overall_place': row[1] if row[1] else 'N/A',
+                        'grade': row[2] if row[2] else 'N/A',
+                        'time': row[3] if row[3] else 'N/A',
+                        'date': row[4] if row[4] else 'N/A',
+                        'meet': row[5] if row[5] else 'N/A',
+                        'comments': row[6] if row[6] else 'N/A',
+                        'photo': row[7] if row[7] else 'N/A'
                     }
                     i += 1
 
